@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install FFmpeg test tools
+        run: choco install ffmpeg -y --no-progress
+
       - name: Run tests
         run: npm test
 

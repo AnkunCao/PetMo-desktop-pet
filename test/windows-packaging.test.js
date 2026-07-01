@@ -44,6 +44,7 @@ test("Windows workflow tests, builds, and uploads the exact installer", () => {
   assert.match(workflow, /permissions:\s*\n\s*contents:\s*read/);
   assert.match(workflow, /timeout-minutes:\s*30/);
   assert.match(workflow, /run:\s*npm ci/);
+  assert.match(workflow, /run:\s*choco install ffmpeg -y --no-progress/);
   assert.match(workflow, /run:\s*npm test/);
   assert.match(workflow, /run:\s*npm run app:win/);
   assert.match(workflow, /uses:\s*actions\/upload-artifact@v4/);
