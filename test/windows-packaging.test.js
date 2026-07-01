@@ -10,7 +10,10 @@ test("package config builds an x64 NSIS installer with the expected install expe
     fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
   );
 
-  assert.equal(packageJson.scripts["app:win"], "electron-builder --win nsis --x64");
+  assert.equal(
+    packageJson.scripts["app:win"],
+    "electron-builder --win nsis --x64 --publish never"
+  );
   assert.deepEqual(packageJson.build.win.target, [
     {
       target: "nsis",

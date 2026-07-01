@@ -10,7 +10,7 @@
     "settings": "ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ electron . --settings",
     "app:mac": "electron-builder --mac dir --arm64",
     "app:mac:clean": "rm -rf release && npm run app:mac",
-    "app:win": "electron-builder --win nsis --x64",
+    "app:win": "electron-builder --win nsis --x64 --publish never",
     "test": "node --test test/*.test.js",
     "test:generate-fixtures": "node test/generate-test-videos.js"
   },
