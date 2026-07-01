@@ -53,6 +53,28 @@ release/mac-arm64/PetMo.app
 
 当前构建是本机测试用未签名版本。向其他用户正式发布前，需要增加 Apple Developer ID 签名、公证，并生成 DMG 安装镜像。
 
+## 构建 Windows x64 安装包
+
+Windows 10/11 x64 内测安装包由 GitHub Actions 构建：
+
+1. 打开仓库的 **Actions** 页面。
+2. 选择 **Build Windows Installer**。
+3. 点击 **Run workflow**，等待任务完成。
+4. 打开完成的任务，在 **Artifacts** 区域下载 `PetMo-Windows-x64`。
+5. 解压后双击 `PetMo-Setup-0.1.0.exe` 安装。
+
+安装器支持选择安装目录，并会创建桌面和开始菜单快捷方式。当前内测版本没有 Windows 商业代码签名；如果 SmartScreen 显示“Windows 已保护你的电脑”，点击“更多信息”，再选择“仍要运行”。
+
+Windows 用户也可以在 Windows x64 电脑上从源码构建：
+
+```bash
+npm ci
+npm test
+npm run app:win
+```
+
+输出文件位于 `release/PetMo-Setup-0.1.0.exe`。
+
 ## VSCode 调试
 
 打开本文件夹后，进入 VSCode 的”运行和调试”，选择 `Launch Desktop Pet`。
