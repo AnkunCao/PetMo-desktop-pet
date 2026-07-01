@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.pet-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  -webkit-app-region: drag;
+}
+
+.pet {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.pet:focus-visible {
+  outline: 3px solid rgba(82, 120, 255, 0.75);
+  outline-offset: -4px;
+}
+
+.pet-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.chroma-video-player {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+/* 两层视频堆叠铺满容器，用 opacity 交叉淡化切换。背景透明，直接透出桌面。 */
+.chroma-video-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  pointer-events: none;
+}
+
+.custom-pet-image {
+  position: absolute;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 2px rgba(45, 35, 28, 0.15));
+}
+
+.pet.has-custom-image .custom-pet-image {
+  display: block;
+}
+
+/* 视频模式下隐藏静态图，改由透明视频铺满。 */
+.pet.is-video-mode .custom-pet-image {
+  opacity: 0;
+}

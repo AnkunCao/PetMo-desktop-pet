@@ -1,0 +1,63 @@
+{
+  "name": "desktop-pet",
+  "version": "0.1.0",
+  "description": "A small desktop pet built with Electron.",
+  "productName": "PetMo",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ electron .",
+    "dev": "ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ electron .",
+    "settings": "ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ electron . --settings",
+    "app:mac": "electron-builder --mac dir --arm64",
+    "app:mac:clean": "rm -rf release && npm run app:mac",
+    "test": "node --test test/*.test.js",
+    "test:generate-fixtures": "node test/generate-test-videos.js"
+  },
+  "keywords": [
+    "electron",
+    "desktop-pet"
+  ],
+  "author": "",
+  "license": "MIT",
+  "build": {
+    "appId": "com.petmo.desktop-pet",
+    "productName": "PetMo",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!**/*.map"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**/*"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.utilities",
+      "identity": null,
+      "darkModeSupport": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "openai": "^6.44.0",
+    "pngjs": "^7.0.0",
+    "three": "^0.184.0"
+  }
+}

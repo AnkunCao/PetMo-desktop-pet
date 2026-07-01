@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>创建我的桌面宠物</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-text">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> DESKTOP PET AI STUDIO</p>
+        <h1>创建我的桌面宠物</h1>
+        <p class="hero-subtitle">用四张照片，生成一只有真实动作和独特外形的桌面伙伴。</p>
+      </div>
+      <span class="local-badge"><span class="status-dot"></span> 本地安全运行</span>
+    </header>
+
+    <main class="workspace">
+      <section class="card preview-panel" aria-labelledby="photo-title">
+        <div class="section-heading">
+          <span class="step-number">1</span>
+          <div>
+            <h2 id="photo-title">添加宠物照片</h2>
+            <p>添加四个视角，帮助模型识别外形和花纹</p>
+          </div>
+        </div>
+
+        <div class="photo-grid" id="photo-grid">
+          <label class="photo-slot" data-index="0">
+            <input class="photo-input" data-index="0" type="file" accept="image/png,image/jpeg,image/webp" />
+            <img alt="宠物正面照片预览" />
+            <span class="upload-placeholder">
+              <span class="upload-icon" aria-hidden="true">+</span>
+              <strong>正面</strong>
+              <small>点击或拖入</small>
+            </span>
+            <span class="replace-label">更换</span>
+          </label>
+          <label class="photo-slot" data-index="1">
+            <input class="photo-input" data-index="1" type="file" accept="image/png,image/jpeg,image/webp" />
+            <img alt="宠物左侧照片预览" />
+            <span class="upload-placeholder">
+              <span class="upload-icon" aria-hidden="true">+</span>
+              <strong>左侧</strong>
+              <small>点击或拖入</small>
+            </span>
+            <span class="replace-label">更换</span>
+          </label>
+          <label class="photo-slot" data-index="2">
+            <input class="photo-input" data-index="2" type="file" accept="image/png,image/jpeg,image/webp" />
+            <img alt="宠物右侧照片预览" />
+            <span class="upload-placeholder">
+              <span class="upload-icon" aria-hidden="true">+</span>
+              <strong>右侧</strong>
+              <small>点击或拖入</small>
+            </span>
+            <span class="replace-label">更换</span>
+          </label>
+          <label class="photo-slot" data-index="3">
+            <input class="photo-input" data-index="3" type="file" accept="image/png,image/jpeg,image/webp" />
+            <img alt="宠物全身照片预览" />
+            <span class="upload-placeholder">
+              <span class="upload-icon" aria-hidden="true">+</span>
+              <strong>全身</strong>
+              <small>点击或拖入</small>
+            </span>
+            <span class="replace-label">更换</span>
+          </label>
+        </div>
+        <p class="photo-hint">每张支持 PNG、JPG 或 WebP，最大 15MB</p>
+      </section>
+
+      <section class="card settings-panel" aria-labelledby="api-title">
+        <div class="section-heading">
+          <span class="step-number">2</span>
+          <div>
+            <h2 id="api-title">配置 API</h2>
+            <p>选择品牌、查看模型、输入密钥</p>
+          </div>
+        </div>
+
+        <form id="pet-form">
+          <div class="field">
+            <span>AI 提供商</span>
+            <div class="model-selector">
+              <select id="model-provider-select">
+                <option value="openai">OpenAI (ChatGPT)</option>
+                <option value="bytedance">Bytedance</option>
+              </select>
+              <p class="model-note" id="model-note">当前：OpenAI (ChatGPT)</p>
+            </div>
+          </div>
+
+          <div class="field field-readonly">
+            <span>图片生成模型</span>
+            <p class="field-readonly-value">
+              <span id="image-model-display">gpt-image-1.5</span>
+              <small>由选定的提供商决定</small>
+            </p>
+          </div>
+
+          <div class="field field-readonly">
+            <span>视频生成模型</span>
+            <p class="field-readonly-value">
+              <span id="video-model-display">sora-2</span>
+              <small>由选定的提供商决定</small>
+            </p>
+          </div>
+
+          <label class="field">
+            <span>API Key</span>
+            <input
+              id="api-key"
+              type="password"
+              autocomplete="off"
+              placeholder="sk-..."
+            />
+            <small id="key-status">尚未记住该供应商的密钥</small>
+          </label>
+          <label class="remember-api-row">
+            <input id="remember-api-key" type="checkbox" />
+            <span>记住 API（加密保存在本机）</span>
+          </label>
+
+          <section class="api-guide" id="api-guide">
+            <div class="api-guide-head">
+              <button
+                type="button"
+                class="api-guide-toggle"
+                id="api-guide-toggle"
+                aria-expanded="false"
+                aria-controls="api-guide-body"
+              >
+                <span data-i18n="guideTitle">如何获取 API Key？</span>
+                <span class="api-guide-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="api-guide-lang" role="group" aria-label="语言 / Language">
+                <button type="button" class="lang-button is-active" data-lang="zh">中文</button>
+                <button type="button" class="lang-button" data-lang="en">English</button>
+              </div>
+            </div>
+            <div class="api-guide-body" id="api-guide-body" hidden>
+              <!-- 中文内容 -->
+              <div class="api-guide-content" data-lang-content="zh">
+                <ol>
+                  <li><strong>OpenAI (ChatGPT) API 密钥获取：</strong></li>
+                  <li>打开 platform.openai.com 并登录你的 OpenAI 账号。</li>
+                  <li>进入左侧菜单的「API keys」页面（也可直接访问 platform.openai.com/api-keys）。</li>
+                  <li>点击「Create new secret key」创建一个新密钥。</li>
+                  <li>复制生成的密钥（以 sk- 开头），粘贴到上方的 API Key 输入框。</li>
+                  <li>注意：使用 API 会按 OpenAI 的用量计费，需要账户里有余额或绑定支付方式。</li>
+                  <li style="margin-top: 12px;"><strong>Bytedance (字节) API 密钥获取：</strong></li>
+                  <li>打开 api.siliconflow.cn 并登录（或从字节官方渠道获取 API 平台地址）。</li>
+                  <li>进入「API Keys」管理页面。</li>
+                  <li>创建新密钥，复制后粘贴到上方输入框。</li>
+                  <li>确保账户余额充足。</li>
+                </ol>
+                <p class="api-guide-warning">
+                  ⚠️ 重要：API Key 等同于你账户的密码，泄漏后可能产生费用。请勿分享给他人、不要提交到代码仓库或截图外发。默认不会保存密钥；只有勾选“记住 API”时才会加密保存在本机。
+                </p>
+              </div>
+              <!-- 英文内容 -->
+              <div class="api-guide-content" data-lang-content="en" hidden>
+                <ol>
+                  <li><strong>OpenAI (ChatGPT) API Key:</strong></li>
+                  <li>Open platform.openai.com and sign in to your OpenAI account.</li>
+                  <li>Go to the "API keys" page from the left menu (or visit platform.openai.com/api-keys directly).</li>
+                  <li>Click "Create new secret key" to create a new key.</li>
+                  <li>Copy the generated key (starts with sk-) and paste it into the API Key field above.</li>
+                  <li>Note: API usage is billed by OpenAI; your account needs credit or a payment method.</li>
+                  <li style="margin-top: 12px;"><strong>Bytedance (字节) API Key:</strong></li>
+                  <li>Open api.siliconflow.cn or use the official Bytedance API platform link.</li>
+                  <li>Go to the "API Keys" management page.</li>
+                  <li>Create a new key and copy it to the field above.</li>
+                  <li>Ensure your account has sufficient balance.</li>
+                </ol>
+                <p class="api-guide-warning">
+                  ⚠️ Important: Your API Key is like your account password and may incur charges if leaked. It is not saved by default; it is encrypted locally only when “Remember API” is selected.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <div class="notice is-live">
+            点击生成后会把四张照片上传至 <span id="upload-provider-name">OpenAI</span>，并产生一次图片生成和三次视频生成费用。
+          </div>
+
+          <div class="settings-actions">
+            <button class="generate-button" id="generate-button" type="submit">
+              <span class="button-label">生成桌面宠物</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+          </div>
+          <button class="regenerate-button" id="regenerate-button" type="button">
+            <span class="button-label">重新生成（会再次产生 API 费用）</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <section class="animation-panel" aria-labelledby="animation-title">
+          <div class="animation-header">
+            <h3 id="animation-title">动画生成进度 <span class="model-badge" id="animation-provider-badge">OpenAI</span></h3>
+            <p id="animation-summary">当前没有待恢复的动画任务。</p>
+          </div>
+
+          <div class="animation-flow" aria-label="动画生成流程">
+            <div class="flow-row">
+              <span class="flow-label">标准图</span>
+              <strong class="flow-status" id="canonical-stage-status">未开始</strong>
+            </div>
+
+            <div class="flow-row flow-row-action">
+              <span class="flow-label">待机</span>
+              <div class="track" aria-hidden="true">
+                <div class="fill" id="idle-fill"></div>
+              </div>
+              <span class="flow-progress" id="idle-progress">0%</span>
+              <strong class="flow-status" id="idle-status">未开始</strong>
+            </div>
+
+            <div class="flow-row flow-row-action">
+              <span class="flow-label">站起</span>
+              <div class="track" aria-hidden="true">
+                <div class="fill" id="stand-sit-fill"></div>
+              </div>
+              <span class="flow-progress" id="stand-sit-progress">0%</span>
+              <strong class="flow-status" id="stand-sit-status">未开始</strong>
+            </div>
+
+            <div class="flow-row flow-row-action">
+              <span class="flow-label">睡觉</span>
+              <div class="track" aria-hidden="true">
+                <div class="fill" id="sleep-fill"></div>
+              </div>
+              <span class="flow-progress" id="sleep-progress">0%</span>
+              <strong class="flow-status" id="sleep-status">未开始</strong>
+            </div>
+
+            <div class="flow-row">
+              <span class="flow-label">本地保存</span>
+              <strong class="flow-status" id="save-stage-status">未开始</strong>
+            </div>
+          </div>
+
+          <div class="animation-actions">
+            <button class="manage-button" id="open-action-manager-button" type="button">
+              动作管理
+            </button>
+            <button class="secondary-action-button" id="cancel-animation-button" type="button">
+              取消后续动作
+            </button>
+            <button class="secondary-action-button" id="retry-animation-button" type="button">
+              重试失败动作
+            </button>
+          </div>
+        </section>
+
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <!-- 动作管理模态浮层 -->
+    <div class="modal-overlay" id="action-manager" hidden>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="action-manager-title">
+        <div class="modal-head">
+          <div>
+            <h2 id="action-manager-title">动作管理</h2>
+            <p>预览、重新生成或删除每个动作；待机、站起、睡觉为核心动作。</p>
+          </div>
+          <button class="modal-close" id="close-action-manager-button" type="button" aria-label="关闭">×</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="rekey-control">
+            <div class="rekey-slider-row">
+              <label for="chroma-slider">抠图强度</label>
+              <input
+                type="range"
+                id="chroma-slider"
+                min="0.05"
+                max="0.5"
+                step="0.01"
+                value="0.28"
+              />
+              <span class="rekey-value" id="chroma-value">0.28</span>
+              <button class="rekey-all-button" id="rekey-all-button" type="button">重新抠图（全部）</button>
+            </div>
+            <p class="rekey-hint">数值越大抠得越干净，过大会误伤深色或白色毛发。复用本地视频，不产生 API 费用。</p>
+          </div>
+
+          <div class="manager-grid" id="action-manager-grid">
+            <figure class="action-card" data-action="idle">
+              <video class="preview-video" id="preview-idle" muted loop playsinline preload="metadata"></video>
+              <figcaption>待机</figcaption>
+              <span class="core-badge">核心</span>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="idle" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="idle" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="idle" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+              </div>
+            </figure>
+            <figure class="action-card" data-action="stand-sit">
+              <video class="preview-video" id="preview-stand-sit" muted loop playsinline preload="metadata"></video>
+              <figcaption>站起</figcaption>
+              <span class="core-badge">核心</span>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="stand-sit" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="stand-sit" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="stand-sit" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+              </div>
+            </figure>
+            <figure class="action-card" data-action="sleep">
+              <video class="preview-video" id="preview-sleep" muted loop playsinline preload="metadata"></video>
+              <figcaption>睡觉</figcaption>
+              <span class="core-badge">核心</span>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="sleep" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="sleep" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="sleep" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+              </div>
+            </figure>
+            <figure class="action-card" id="preview-card-look-up" data-action="look-up" hidden>
+              <video class="preview-video" id="preview-look-up" muted loop playsinline preload="metadata"></video>
+              <figcaption>抬头</figcaption>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="look-up" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="look-up" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="look-up" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+                <button class="preview-delete-button" data-action="look-up" type="button" title="删除">🗑 删除</button>
+              </div>
+            </figure>
+            <figure class="action-card" id="preview-card-roll-over" data-action="roll-over" hidden>
+              <video class="preview-video" id="preview-roll-over" muted loop playsinline preload="metadata"></video>
+              <figcaption>翻肚皮</figcaption>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="roll-over" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="roll-over" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="roll-over" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+                <button class="preview-delete-button" data-action="roll-over" type="button" title="删除">🗑 删除</button>
+              </div>
+            </figure>
+            <figure class="action-card" id="preview-card-run" data-action="run" hidden>
+              <video class="preview-video" id="preview-run" muted loop playsinline preload="metadata"></video>
+              <figcaption>奔跑</figcaption>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="run" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="run" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="run" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+                <button class="preview-delete-button" data-action="run" type="button" title="删除">🗑 删除</button>
+              </div>
+            </figure>
+            <figure class="action-card" id="preview-card-stretch" data-action="stretch" hidden>
+              <video class="preview-video" id="preview-stretch" muted loop playsinline preload="metadata"></video>
+              <figcaption>伸懒腰</figcaption>
+              <div class="action-controls">
+                <button class="preview-play-button" data-action="stretch" type="button" title="播放/暂停">▶ 播放</button>
+                <button class="preview-regenerate-button" data-action="stretch" type="button" title="重新生成">🔄 重生成</button>
+                <button class="preview-rekey-button" data-action="stretch" type="button" title="用当前抠图强度重新抠图">🪄 重扣</button>
+                <button class="preview-delete-button" data-action="stretch" type="button" title="删除">🗑 删除</button>
+              </div>
+            </figure>
+          </div>
+
+          <div class="manager-add" id="manager-add">
+            <h4>新增动作</h4>
+            <p class="manager-add-hint">逐个生成额外动作来丰富你的宠物表情，每个会产生一次视频生成费用。</p>
+            <div class="add-buttons" id="add-action-buttons">
+              <button class="add-action-button" data-action="look-up" type="button">＋ 抬头</button>
+              <button class="add-action-button" data-action="roll-over" type="button">＋ 翻肚皮</button>
+              <button class="add-action-button" data-action="run" type="button">＋ 奔跑</button>
+              <button class="add-action-button" data-action="stretch" type="button">＋ 伸懒腰</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./settings.js"></script>
+  </body>
+</html>
